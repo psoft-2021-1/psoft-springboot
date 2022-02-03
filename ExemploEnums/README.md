@@ -15,14 +15,14 @@ public enum StatusTrabalhoEnum {
     // .
 }
 ```
-Esta api fornece dois endpoints, um para salvar uma pessoa e outro para listar todas as pessoas.  
+Esta api fornece três endpoints, um para salvar uma pessoa, outro para listar todas as pessoas e um para listar os tipos de status de trabalho disponíveis .  
  
 sendo eles:  
-/ [método post]  
-/ [método get]
+/pessoas [método post]  
+/pessoas [método get]  
+/pessoas/tipos [método get]
 
-para o post, o modelo json de usuário a ser enviado é:  
-obs.: não foi utilizado DTO por motivos de simplificação
+para o post, o modelo json de usuário a ser enviado é:
 ```json
 {
     "id": number,
@@ -31,10 +31,8 @@ obs.: não foi utilizado DTO por motivos de simplificação
 }
 ```
 
-Os possíveis valores para statusTrabalho são: "Trabalha" e "Não trabalha" - assim como o atributo do enum.  
-Para formatar este tipo de criação de enum, foi utilizada a anotação @JsonCreator na própria classe do enum,
-segue classe completa:
-
+Os possíveis valores para statusTrabalho são: "TRABALHA" e "FOLGA" - assim como o atributo do enum. 
+O getTrabalha() será utilizado para formatar o DTO de retorno.
 ```java
 
 public enum StatusTrabalhoEnum {
@@ -45,24 +43,11 @@ public enum StatusTrabalhoEnum {
     StatusTrabalhoEnum(String trabalha) {
         this.trabalha = trabalha;
     }
-
-    // quando for desserializar o enum, o valor mostrado no json de retorno será  
-    // "Trabalha" ou "Não trabalha", como mostrado no swagger.
-    @JsonValue
+    
     public String getTrabalha() {
         return trabalha;
     }
-
-    //Você vai instanciar um StatusTrabalhoEnum baseado no texto do teu requestBody
-    // os possíveis valores são "Trabalha" ou "Não Trabalha".
-    @JsonCreator
-    public static StatusTrabalhoEnum fromText(String texto) {
-        for (StatusTrabalhoEnum status : StatusTrabalhoEnum.values()) {
-            if (status.getTrabalha().equals(texto))
-                return status;
-        }
-        return null;
-    }
+    
 }
 ```
 Vai ser verificado se o texto passando no json bate com algum dos valores passados no construtor do enum. Senão, retorna null (essa verificação podem fazer da forma que quiser).  
