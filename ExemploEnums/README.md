@@ -8,7 +8,7 @@ Foi utilizando Enums para representar esses dois estados
 ```java
 public enum StatusTrabalhoEnum {
     TRABALHA("Trabalha"),
-    FOLGA("Não trabalha");
+    FOLGA("Está de folga");
     private String trabalha;
     // .
     // .
