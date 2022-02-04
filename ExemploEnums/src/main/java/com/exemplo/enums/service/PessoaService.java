@@ -2,14 +2,13 @@ package com.exemplo.enums.service;
 
 import com.exemplo.enums.StatusTrabalhoEnum;
 import com.exemplo.enums.dto.PessoaDTO;
+import com.exemplo.enums.dto.PessoaResponseDTO;
 import com.exemplo.enums.dto.StatusDTO;
 import com.exemplo.enums.model.Pessoa;
 import com.exemplo.enums.repository.PessoaRepository;
-import com.exemplo.enums.service.excecoes.ExcecaoEnum;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,21 +20,21 @@ public class PessoaService {
         this.pessoaRepository = pessoaRepository;
     }
 
-    public PessoaDTO save(PessoaDTO dto){
+    public PessoaResponseDTO save(PessoaDTO dto){
         Pessoa entidade = new Pessoa();
         entidade.setNome(dto.getNome());
-        entidade.setStatusTrabalho(StringToEnum(dto.getStatusTrabalho()));
+        entidade.setStatusTrabalho(dto.getStatusTrabalho());
         entidade = pessoaRepository.save(entidade);
-        return new PessoaDTO(entidade);
+        return new PessoaResponseDTO(entidade);
     }
 
-    public List<PessoaDTO> findAll() {
+    public List<PessoaResponseDTO> findAll() {
         //this.pessoaRepository.findAll()
         //        .stream().map(pessoa -> new PessoaResponseDTO(pessoa)).collect(Collectors.toList());
         List<Pessoa> pessoas = this.pessoaRepository.findAll();
-        List<PessoaDTO> pessoasDTO = new ArrayList<>();
+        List<PessoaResponseDTO> pessoasDTO = new ArrayList<>();
         for(Pessoa p : pessoas){
-            pessoasDTO.add(new PessoaDTO(p));
+            pessoasDTO.add(new PessoaResponseDTO(p));
         }
         return pessoasDTO;
     }
@@ -47,14 +46,5 @@ public class PessoaService {
             tipos.add(new StatusDTO(status));
         }
         return tipos;
-    }
-
-    private StatusTrabalhoEnum StringToEnum(String valor){
-        try{
-            return StatusTrabalhoEnum.valueOf(valor);
-        }
-        catch(IllegalArgumentException e){
-            throw new ExcecaoEnum(Arrays.toString(StatusTrabalhoEnum.values()));
-        }
     }
 }

@@ -3,25 +3,25 @@ package com.exemplo.enums.dto;
 import com.exemplo.enums.StatusTrabalhoEnum;
 import com.exemplo.enums.model.Pessoa;
 
-public class PessoaDTO {
+public class PessoaResponseDTO {
 
     private Long id;
     private String nome;
-    private StatusTrabalhoEnum statusTrabalho;
+    private String statusTrabalho;
 
-    public PessoaDTO() {
+    public PessoaResponseDTO() {
     }
 
-    public PessoaDTO(Long id, String nome, StatusTrabalhoEnum statusTrabalho) {
+    public PessoaResponseDTO(Long id, String nome, String statusTrabalho) {
         this.id = id;
         this.nome = nome;
         this.statusTrabalho = statusTrabalho;
     }
 
-    public PessoaDTO(Pessoa entidade){
+    public PessoaResponseDTO(Pessoa entidade){
         this.id = entidade.getId();
         this.nome = entidade.getNome();
-        this.statusTrabalho = entidade.getStatusTrabalho();
+        this.statusTrabalho = entidade.getStatusTrabalho().getTrabalha();
     }
 
     public Long getId() {
@@ -40,11 +40,11 @@ public class PessoaDTO {
         this.nome = nome;
     }
 
-    public StatusTrabalhoEnum getStatusTrabalho() {
+    public String getStatusTrabalho() {
         return statusTrabalho;
     }
 
-    public void setStatusTrabalho(StatusTrabalhoEnum statusTrabalho) {
+    public void setStatusTrabalho(String statusTrabalho) {
         this.statusTrabalho = statusTrabalho;
     }
 }
