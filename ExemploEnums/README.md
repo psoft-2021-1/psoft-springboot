@@ -37,7 +37,7 @@ O getTrabalha() será utilizado para formatar o DTO de retorno.
 
 public enum StatusTrabalhoEnum {
     TRABALHA("Trabalha"),
-    FOLGA("Não trabalha");
+    FOLGA("Está de folga");
     private String trabalha;
 
     StatusTrabalhoEnum(String trabalha) {
